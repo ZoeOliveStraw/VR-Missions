@@ -9,8 +9,11 @@ public abstract class StateController : MonoBehaviour
 
     protected void LoadState(State state)
     {
-        currentState.OnStateExit();
+        if (currentState != null)
+        {
+            currentState.OnStateExit();
+        }
         currentState = state;
-        currentState.OnStateEnter();
+        currentState.OnStateEnter(this.gameObject);
     }
 }
