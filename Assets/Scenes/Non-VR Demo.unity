@@ -156,56 +156,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &165992617
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 165992619}
-  - component: {fileID: 165992618}
-  m_Layer: 0
-  m_Name: Patrol Node(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &165992618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165992617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f577530ee3d84b34abd15eadaa0585fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myGuard: {fileID: 1501516590}
-  patrolNodePrefab: {fileID: 6261319906246429181, guid: 6bb4cf13717cad0439abeb0f1fbcb1da, type: 3}
-  parentObject: {fileID: 727916873}
-  nextNode: {fileID: 1143663863}
-  firstNode: {fileID: 448450597}
-  previousNode: {fileID: 1901098973}
---- !u!4 &165992619
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165992617}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.26, y: 0, z: -5.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 727916874}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &438403225
 Mesh:
   m_ObjectHideFlags: 0
@@ -857,12 +807,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143663861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07, y: 0, z: -5.25}
+  m_LocalPosition: {x: 6.01, y: 0, z: -3.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 727916874}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1143663863
 MonoBehaviour:
@@ -876,12 +826,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f577530ee3d84b34abd15eadaa0585fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitAtNode: 10
   myGuard: {fileID: 1501516590}
   patrolNodePrefab: {fileID: 6261319906246429181, guid: 6bb4cf13717cad0439abeb0f1fbcb1da, type: 3}
   parentObject: {fileID: 727916873}
   nextNode: {fileID: 0}
   firstNode: {fileID: 448450597}
-  previousNode: {fileID: 165992618}
+  previousNode: {fileID: 1901098973}
 --- !u!114 &1501516590 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8113478050349353060, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
@@ -1037,6 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f577530ee3d84b34abd15eadaa0585fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitAtNode: 3
   myGuard: {fileID: 1501516590}
   patrolNodePrefab: {fileID: 6261319906246429181, guid: 6bb4cf13717cad0439abeb0f1fbcb1da, type: 3}
   parentObject: {fileID: 727916873}
@@ -1051,7 +1003,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706346072}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.11}
+  m_LocalPosition: {x: 0, y: 0, z: 3.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1065,6 +1017,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1615036633688796597, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615036633688796598, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
+      propertyPath: waitAtNode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8113478050428778004, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
       propertyPath: m_Name
       value: Patrol
@@ -1144,10 +1104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f577530ee3d84b34abd15eadaa0585fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitAtNode: 5
   myGuard: {fileID: 1501516590}
   patrolNodePrefab: {fileID: 6261319906246429181, guid: 6bb4cf13717cad0439abeb0f1fbcb1da, type: 3}
   parentObject: {fileID: 727916873}
-  nextNode: {fileID: 165992618}
+  nextNode: {fileID: 1143663863}
   firstNode: {fileID: 448450597}
   previousNode: {fileID: 1706346073}
 --- !u!4 &1901098974
@@ -1158,7 +1119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901098972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.26, y: 0, z: 4.1099997}
+  m_LocalPosition: {x: 6.28, y: 0, z: 3.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
