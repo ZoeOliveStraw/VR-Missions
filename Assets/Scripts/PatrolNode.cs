@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PatrolNode : MonoBehaviour
 {
+    public float waitAtNode = 1;
     public GuardAI myGuard;
     public GameObject patrolNodePrefab;
     public GameObject parentObject;
@@ -23,6 +24,10 @@ public class PatrolNode : MonoBehaviour
         else if (firstNode)
         {
             Gizmos.DrawLine(transform.position, firstNode.GetPosition());
+        }
+        else if (previousNode.nextNode)
+        {
+            Gizmos.DrawLine(transform.position, previousNode.GetPosition());
         }
     }
 

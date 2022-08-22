@@ -9,6 +9,7 @@ public class GS_Patrol : State
 {
     private bool loopPatrol;
     private NavMeshAgent navAgent;
+    private GuardAI myGuardAI;
 
     private PatrolNode nextNode;
     private float minDistanceToTarget = 0.2f;
@@ -17,7 +18,7 @@ public class GS_Patrol : State
     {
         base.OnStateEnter(myOwner);
 
-        GuardAI myGuardAI = owner.GetComponent<GuardAI>();
+        myGuardAI = owner.GetComponent<GuardAI>();
         loopPatrol = myGuardAI.loopPatrol;
         navAgent = myGuardAI.navAgent;
 
@@ -30,8 +31,14 @@ public class GS_Patrol : State
         if (Vector3.Distance(owner.transform.position, nextNode.GetPosition()) < minDistanceToTarget)
         {
             nextNode = nextNode.GetNextNode();
-            navAgent.SetDestination(nextNode.GetPosition());
+            myGuardAI.StartCoroutine(WaitBeforeNextNode());
         }
+    }
+
+    public IEnumerator WaitBeforeNextNode()
+    {
+        yield return new WaitForSeconds(nextNode.waitAtNode);
+        navAgent.SetDestination(nextNode.GetPosition());
     }
     
     public override void OnStateExit()
