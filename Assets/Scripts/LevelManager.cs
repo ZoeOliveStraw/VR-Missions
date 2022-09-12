@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager instance;
+    public static LevelManager instance; //static instance of the player to be its position
     private Transform playerTransform;
     private Vector3 playerPosision;
     
