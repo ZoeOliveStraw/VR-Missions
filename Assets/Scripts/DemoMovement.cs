@@ -41,9 +41,7 @@ public class DemoMovement : MonoBehaviour
             currentMoveVector.y * moveSpeed * Time.deltaTime);
         transform.position += newPosition;
 
-        Vector3 lookDir = (newPosition - transform.position).normalized;
-        Quaternion lookRot = Quaternion.LookRotation(lookDir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+        transform.LookAt( transform.position + newPosition);
     }
     
     private void OnEnable()

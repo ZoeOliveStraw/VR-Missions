@@ -22,7 +22,7 @@ public class GuardVision : MonoBehaviour
     
     private LevelManager mgr;
 
-    private bool canSeePlayer;
+    public bool canSeePlayer;
     private float currentDistanceToPlayer;
 
     private void Start()
@@ -102,7 +102,6 @@ public class GuardVision : MonoBehaviour
         if (canSeePlayer)
         {
             float portionOfDistance = (maxPlayerDistaince - currentDistanceToPlayer) / maxPlayerDistaince;
-            Debug.Log(portionOfDistance);
             return portionOfDistance;
         }
         else

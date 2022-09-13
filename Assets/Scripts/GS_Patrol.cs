@@ -10,15 +10,23 @@ public class GS_Patrol : State
     private bool loopPatrol;
     private NavMeshAgent navAgent;
     private GuardAI myGuardAI;
+    private GuardVision myGuardVision;
 
     private PatrolNode nextNode;
     private float minDistanceToTarget = 0.2f;
 
+    private float currentAlertness = 0; //This variable will build as the guard can see the player
+    private float alertnessMeter; //Amount of time the guard needs to see the player to become alert
+
     public override void OnStateEnter(GameObject myOwner)
     {
+        currentAlertness = 0;
+        
         base.OnStateEnter(myOwner);
 
         myGuardAI = owner.GetComponent<GuardAI>();
+        myGuardVision = owner.GetComponent<GuardVision>();
+        alertnessMeter = myGuardAI.timeSeenToAlert;
         loopPatrol = myGuardAI.loopPatrol;
         navAgent = myGuardAI.navAgent;
 
@@ -28,11 +36,41 @@ public class GS_Patrol : State
 
     public override void UpdateState()
     {
+        SetNode();
+        CheckForPlayer();
+    }
+
+    private void SetNode()
+    {
+        
+        
         if (Vector3.Distance(owner.transform.position, nextNode.GetPosition()) < minDistanceToTarget)
         {
             nextNode = nextNode.GetNextNode();
             myGuardAI.StartCoroutine(WaitBeforeNextNode());
         }
+    }
+
+    private void CheckForPlayer()
+    {
+        if (myGuardVision.canSeePlayer)
+        {
+            currentAlertness += Time.deltaTime * myGuardVision.GetAmountPlayerIsVisible();
+            if (currentAlertness > alertnessMeter) currentAlertness = alertnessMeter;
+        }
+        else
+        {
+            currentAlertness -= Time.deltaTime;
+            if (currentAlertness < 0) currentAlertness = 0;
+        }
+        
+        Debug.Log($"Alertness: {currentAlertness}");
+            
+        if (currentAlertness >= alertnessMeter)
+        {
+            myGuardAI.EnterAlertState();
+        }
+        
     }
 
     public IEnumerator WaitBeforeNextNode()

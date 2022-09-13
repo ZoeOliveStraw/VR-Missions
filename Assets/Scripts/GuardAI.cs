@@ -6,9 +6,11 @@ using UnityEngine.AI;
 public class GuardAI : StateController
 {
     [SerializeField] private State patrolState;
+    [SerializeField] private State alertState;
     [SerializeField] public PatrolNode firstNode;
     [SerializeField] public bool loopPatrol; //Will the guard path to the first node upon reaching the last one or simply go back down the chain
-    
+    [SerializeField] public float timeSeenToAlert;
+
     public NavMeshAgent navAgent;
     
     // Start is called before the first frame update
@@ -22,5 +24,10 @@ public class GuardAI : StateController
     void Update()
     {
         currentState.UpdateState();
+    }
+
+    public void EnterAlertState()
+    {
+        LoadState(alertState);
     }
 }
