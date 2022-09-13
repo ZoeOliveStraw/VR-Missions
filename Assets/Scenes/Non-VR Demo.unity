@@ -1248,8 +1248,20 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8113478050349353060, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
+      propertyPath: alertMoveSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113478050349353060, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
+      propertyPath: patrolMoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113478050349353060, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
       propertyPath: timeSeenToAlert
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8113478050349353060, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
+      propertyPath: investigationMoveSpeed
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8113478050349353061, guid: a8f1a6071d9ef8f4a9319c219e0a0e28, type: 3}
       propertyPath: m_Constraints

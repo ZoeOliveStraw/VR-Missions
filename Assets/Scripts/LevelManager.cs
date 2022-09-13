@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager instance; //static instance of the player to be its position
     private Transform playerTransform;
     private Vector3 playerPosision;
+    private Vector3 lastKnownPlayerPosition;
     
     
     // Start is called before the first frame update
@@ -40,6 +41,16 @@ public class LevelManager : MonoBehaviour
             //Setting the player position here to avoid having to get the reference in a bunch of places
             playerPosision = playerTransform.position;
         }
+    }
+
+    private Vector3 GetLastKnownPlayerPosition()
+    {
+        return lastKnownPlayerPosition;
+    }
+
+    private void SetLastKnownPlayerPosition(Vector3 pos)
+    {
+        lastKnownPlayerPosition = pos;
     }
     
     //Reference to the player position that can be grabbed from the static instance anywhere in the level to save on

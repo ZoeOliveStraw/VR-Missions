@@ -28,9 +28,11 @@ public class GS_Patrol : State
 
         myGuardAI = owner.GetComponent<GuardAI>();
         myGuardVision = owner.GetComponent<GuardVision>();
+        navAgent = owner.GetComponent<NavMeshAgent>();
         alertnessMeter = myGuardAI.timeSeenToAlert;
         loopPatrol = myGuardAI.loopPatrol;
-        navAgent = myGuardAI.navAgent;
+            
+        navAgent.speed = myGuardAI.patrolMoveSpeed;
 
         nextNode = myGuardAI.firstNode;
         navAgent.SetDestination(nextNode.GetPosition());
