@@ -10,6 +10,7 @@ public class GuardAI : StateController
     [SerializeField] public PatrolNode firstNode;
     [SerializeField] public bool loopPatrol; //Will the guard path to the first node upon reaching the last one or simply go back down the chain
     [SerializeField] public float timeSeenToAlert;
+    [SerializeField] public float alertFadeTime = 10;
 
     public NavMeshAgent navAgent;
     
@@ -29,5 +30,10 @@ public class GuardAI : StateController
     public void EnterAlertState()
     {
         LoadState(alertState);
+    }
+
+    public void EnterPatrolState()
+    {
+        LoadState(patrolState);
     }
 }

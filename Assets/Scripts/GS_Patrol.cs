@@ -20,6 +20,8 @@ public class GS_Patrol : State
 
     public override void OnStateEnter(GameObject myOwner)
     {
+        Debug.Log("Patrol state entered!");
+        
         currentAlertness = 0;
         
         base.OnStateEnter(myOwner);
@@ -63,9 +65,7 @@ public class GS_Patrol : State
             currentAlertness -= Time.deltaTime;
             if (currentAlertness < 0) currentAlertness = 0;
         }
-        
-        Debug.Log($"Alertness: {currentAlertness}");
-            
+
         if (currentAlertness >= alertnessMeter)
         {
             myGuardAI.EnterAlertState();
