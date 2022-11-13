@@ -7,11 +7,23 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private float alertLength;
+    private float timeSincePlayerSeen;
+    private bool alertActive;
+    
     public static LevelManager instance; //static instance of the player to be its position
     private Transform playerTransform;
     private Vector3 playerPosision;
     private Vector3 lastKnownPlayerPosition;
     
+    //References for the event system
+    public delegate void TriggerAlertState();
+
+    public static event TriggerAlertState AlertTriggered;
+    
+    public delegate void TriggerPatrolState();
+
+    public static event TriggerPatrolState PatrolTriggered;
     
     // Start is called before the first frame update
     void Start()
@@ -29,6 +41,26 @@ public class LevelManager : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
+    private void Update()
+    {
+        if (alertActive)
+        {
+            if (Vector3.Distance(playerPosision, lastKnownPlayerPosition) < 0.2f)
+            {
+                timeSincePlayerSeen = 0;
+            }
+            else
+            {
+                timeSincePlayerSeen += Time.deltaTime;
+            }
+
+            if (timeSincePlayerSeen >= alertLength)
+            {
+                LevelWidePatrol();
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -43,14 +75,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private Vector3 GetLastKnownPlayerPosition()
+    public Vector3 GetLastKnownPlayerPosition()
     {
         return lastKnownPlayerPosition;
     }
 
-    private void SetLastKnownPlayerPosition(Vector3 pos)
+    public void SetLastKnownPlayerPosition()
     {
-        lastKnownPlayerPosition = pos;
+        lastKnownPlayerPosition = playerPosision;
     }
     
     //Reference to the player position that can be grabbed from the static instance anywhere in the level to save on
@@ -58,5 +90,23 @@ public class LevelManager : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return playerPosision;
+    }
+
+    public void LevelWideAlert()
+    {
+        if (AlertTriggered != null)
+        {
+            alertActive = true;
+            AlertTriggered();
+        }
+    }
+
+    public void LevelWidePatrol()
+    {
+        if (PatrolTriggered != null)
+        {
+            alertActive = false;
+            PatrolTriggered();
+        }
     }
 }

@@ -186,8 +186,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolState: {fileID: 11400000, guid: cadb62195b8f1884cbeb704ef4df58f2, type: 2}
+  alertState: {fileID: 11400000, guid: 78be3ce3bc427784ba4a8baeee9290aa, type: 2}
   firstNode: {fileID: 1615036633688796598}
   loopPatrol: 0
+  timeSeenToAlert: 1
+  alertFadeTime: 10
+  patrolMoveSpeed: 2
+  alertMoveSpeed: 3.5
+  investigationMoveSpeed: 2.5
   navAgent: {fileID: 0}
 --- !u!114 &1138004006053518141
 MonoBehaviour:
@@ -205,6 +211,7 @@ MonoBehaviour:
   maxHorizontalAngle: 70
   maxVerticalAngle: 30
   eyes: {fileID: 5382233119865910291}
+  canSeePlayer: 0
 --- !u!1 &8113478050428778004
 GameObject:
   m_ObjectHideFlags: 0

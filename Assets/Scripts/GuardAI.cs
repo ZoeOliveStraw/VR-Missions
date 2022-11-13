@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,11 +40,29 @@ public class GuardAI : StateController
 
     public void EnterAlertState()
     {
-        LoadState(alertState);
+        if (currentState != alertState)
+        {
+            Debug.Log("Triggering alert");
+            LoadState(alertState);
+        }
+        
     }
 
     public void EnterPatrolState()
     {
+        Debug.Log("Triggering patrol");
         LoadState(patrolState);
+    }
+
+    private void OnEnable()
+    {
+        LevelManager.AlertTriggered += EnterAlertState;
+        LevelManager.PatrolTriggered += EnterPatrolState;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.AlertTriggered -= EnterAlertState;
+        LevelManager.PatrolTriggered -= EnterPatrolState;
     }
 }

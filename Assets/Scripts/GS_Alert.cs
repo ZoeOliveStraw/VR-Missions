@@ -9,9 +9,7 @@ public class GS_Alert : State
     private GuardVision myGuardVision;
     private GuardAI myGuardAI;
     private NavMeshAgent navAgent;
-
-    private float timeSincePlayerLastSeen;
-    private float timeUntilAlertFadesIfCantSeePlayer = 5;
+    
     private Vector3 lastKnownPlayerPosition;
     private Vector3 currentTarget;
     
@@ -23,33 +21,21 @@ public class GS_Alert : State
         
         base.OnStateEnter(myOwner);
 
-        myGuardAI = owner.GetComponent<GuardAI>();
-        myGuardVision = owner.GetComponent<GuardVision>();
-        navAgent = owner.GetComponent<NavMeshAgent>();
+        if(!myGuardAI) myGuardAI = owner.GetComponent<GuardAI>();
+        if(!myGuardVision) myGuardVision = owner.GetComponent<GuardVision>();
+        if(!navAgent) navAgent = owner.GetComponent<NavMeshAgent>();
 
         navAgent.speed = myGuardAI.alertMoveSpeed;
-
-        timeUntilAlertFadesIfCantSeePlayer = myGuardAI.alertFadeTime;
     }
     
     public override void UpdateState()
     {
         if (myGuardVision.canSeePlayer)
         {
+            LevelManager.instance.SetLastKnownPlayerPosition();
             lastKnownPlayerPosition = LevelManager.instance.GetPlayerPosition();
-            timeSincePlayerLastSeen = 0;
         }
-        else
-        {
-            timeSincePlayerLastSeen += Time.deltaTime;
-        }
-
-        if (timeSincePlayerLastSeen >= timeUntilAlertFadesIfCantSeePlayer)
-        {
-            myGuardAI.EnterPatrolState();
-            return;
-        }
-
+        
         currentTarget = lastKnownPlayerPosition;
         SetNavigationTarget();
     }

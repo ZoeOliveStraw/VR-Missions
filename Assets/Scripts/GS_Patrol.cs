@@ -26,9 +26,9 @@ public class GS_Patrol : State
         
         base.OnStateEnter(myOwner);
 
-        myGuardAI = owner.GetComponent<GuardAI>();
-        myGuardVision = owner.GetComponent<GuardVision>();
-        navAgent = owner.GetComponent<NavMeshAgent>();
+        if(!myGuardAI) myGuardAI = owner.GetComponent<GuardAI>();
+        if(!myGuardVision) myGuardVision = owner.GetComponent<GuardVision>();
+        if(!navAgent) navAgent = owner.GetComponent<NavMeshAgent>();
         alertnessMeter = myGuardAI.timeSeenToAlert;
         loopPatrol = myGuardAI.loopPatrol;
             
@@ -70,7 +70,7 @@ public class GS_Patrol : State
 
         if (currentAlertness >= alertnessMeter)
         {
-            myGuardAI.EnterAlertState();
+            LevelManager.instance.LevelWideAlert();
         }
         
     }
