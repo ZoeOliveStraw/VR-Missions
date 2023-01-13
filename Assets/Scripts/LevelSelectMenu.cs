@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSelectMenu : MonoBehaviour
 {
+    [Header("ScrollView variables")]
     [SerializeField] private ScrollRect listView;
     [SerializeField] private GameObject listViewContents;
     [SerializeField] private GameObject levelItemPrefab;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,11 @@ public class LevelSelectMenu : MonoBehaviour
             currentItem.transform.localPosition = Vector3.zero;
             currentItem.transform.rotation = listViewContents.transform.rotation;
         }
+    }
+
+    private void GetLevelNames()
+    {
+        
     }
 
     public void LoadLevelButtonPushed()
