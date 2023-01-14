@@ -25,7 +25,6 @@ public class LevelManager : MonoBehaviour
 
     public static event TriggerPatrolState PatrolTriggered;
     
-    // Start is called before the first frame update
     void Start()
     {
         //Set the instance of the level manager
@@ -40,7 +39,7 @@ public class LevelManager : MonoBehaviour
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
-
+    
     private void Update()
     {
         if (alertActive)
@@ -79,7 +78,8 @@ public class LevelManager : MonoBehaviour
     {
         return lastKnownPlayerPosition;
     }
-
+    
+    //Updates the last known player position to wherever the player currently is
     public void SetLastKnownPlayerPosition()
     {
         lastKnownPlayerPosition = playerPosision;
@@ -91,7 +91,8 @@ public class LevelManager : MonoBehaviour
     {
         return playerPosision;
     }
-
+    
+    //Triggers the alert event which will put all guard AIs into alert mode
     public void LevelWideAlert()
     {
         if (AlertTriggered != null)
@@ -100,7 +101,8 @@ public class LevelManager : MonoBehaviour
             AlertTriggered();
         }
     }
-
+    
+    //Triggers the patrol event which will put all guard AIs into patrol mode
     public void LevelWidePatrol()
     {
         if (PatrolTriggered != null)
