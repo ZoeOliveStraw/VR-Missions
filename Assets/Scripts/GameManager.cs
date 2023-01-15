@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        var netReach = Application.internetReachability; //This line prevents the app from crashing. No really.
+        
         if (instance != null && instance != this)
         {
             Destroy(this);
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        
         
         LoadSceneByName("Main Menu");
     }

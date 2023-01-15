@@ -57,7 +57,6 @@ public class LevelSelectMenu : MonoBehaviour
 
     public void LoadLevelButtonPushed()
     {
-        Debug.Log($"Attempting to load level {currentLevelName.text}");
         GameManager.instance.LoadSceneByName(currentLevelName.text);
     }
 }
