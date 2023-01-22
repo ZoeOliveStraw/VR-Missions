@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
@@ -11,12 +13,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private string currentSceneName;
-
-    [SerializeField] private GameObject playerRig;
+    private bool paused = false;
     
+    private PlayerRigController playerRigController;
+    
+    [SerializeField] private GameObject playerRig;
+
+    [SerializeField] private InputActionReference pauseAction;
+
+    private void Awake()
+    {
+        pauseAction.action.performed += ctx => TogglePause();
+    }
+
     void Start()
     {
         var netReach = Application.internetReachability; //This line prevents the app from crashing. No really.
+        playerRigController = playerRig.GetComponent<PlayerRigController>();
         
         if (instance != null && instance != this)
         {
@@ -41,5 +54,20 @@ public class GameManager : MonoBehaviour
     public void MovePlayerRig(Vector3 location)
     {
         playerRig.transform.position = location;
+    }
+
+    public void TogglePause()
+    {
+        if(currentSceneName != "Main Menu")
+        {
+            paused = !paused;
+            Time.timeScale = paused ? 0 : 1;
+            playerRigController.SwitchRayAndGrab(paused);
+        }
+    }
+
+    public GameObject GetPlayerRig()
+    {
+        return playerRig;
     }
 }

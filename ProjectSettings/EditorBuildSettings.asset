@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/01 - Rooftops.unity
+    guid: 09133991a211a5540ba115f877466c25
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ea47f7082726e1d48bb815163abb0b72, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 0c7a4afe1d375784aa8d5f4acb81b238, type: 2}

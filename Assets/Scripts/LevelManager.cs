@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private Transform playerStart;
+    
     [SerializeField] private float alertLength;
     private float timeSincePlayerSeen;
     private bool alertActive;
@@ -38,6 +40,7 @@ public class LevelManager : MonoBehaviour
         }
 
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        MovePlayerToSTart();
     }
     
     private void Update()
@@ -110,5 +113,22 @@ public class LevelManager : MonoBehaviour
             alertActive = false;
             PatrolTriggered();
         }
+    }
+
+    private void MovePlayerToSTart()
+    {
+        if (playerStart != null)
+        {
+            StartCoroutine(MovePlayer());
+        }
+    }
+
+    private IEnumerator MovePlayer()
+    {
+        GameObject playerRig = GameManager.instance.GetPlayerRig();
+        Time.timeScale = 0;
+        playerRig.transform.position = playerStart.position;
+        yield return new WaitForEndOfFrame();
+        Time.timeScale = 1;
     }
 }
