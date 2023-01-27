@@ -16,6 +16,9 @@ public class LevelSelectMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentLevelName;
     [SerializeField] private TextMeshProUGUI currentLevelDescription;
 
+    [Header("Player Position")]
+    [SerializeField] private Transform playerStart;
+
     private LevelInfo[] levels;
 
     // Start is called before the first frame update
@@ -23,6 +26,8 @@ public class LevelSelectMenu : MonoBehaviour
     {
         GetLevelInfo();
         PopulateLevelListView();
+        MovePlayerToSTart();
+        
     }
 
     //This method will populate the ListView contents with items to represent the levels in the game
@@ -58,5 +63,21 @@ public class LevelSelectMenu : MonoBehaviour
     public void LoadLevelButtonPushed()
     {
         GameManager.instance.LoadSceneByName(currentLevelName.text);
+    }
+    
+    private void MovePlayerToSTart()
+    {
+        if (playerStart != null)
+        {
+            StartCoroutine(MovePlayer());
+        }
+    }
+    private IEnumerator MovePlayer()
+    {
+        GameObject playerRig = GameManager.instance.GetPlayerRig();
+        Time.timeScale = 0;
+        playerRig.transform.position = playerStart.position;
+        yield return new WaitForEndOfFrame();
+        Time.timeScale = 1;
     }
 }

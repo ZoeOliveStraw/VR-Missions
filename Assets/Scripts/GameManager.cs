@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
         if(currentSceneName != null) SceneManager.UnloadSceneAsync(currentSceneName);
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         currentSceneName = sceneName;
+        playerRigController.SetPauseState(false);
+        Time.timeScale = 1;
+        paused = false;
     }
 
     public void MovePlayerRig(Vector3 location)
@@ -62,7 +65,7 @@ public class GameManager : MonoBehaviour
         {
             paused = !paused;
             Time.timeScale = paused ? 0 : 1;
-            playerRigController.SwitchRayAndGrab(paused);
+            playerRigController.SetPauseState(paused);
         }
     }
 
