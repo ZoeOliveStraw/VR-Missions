@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour
     private bool paused = false;
     
     private PlayerRigController playerRigController;
-    
     [SerializeField] private GameObject playerRig;
-
     [SerializeField] private InputActionReference pauseAction;
+    [SerializeField] private Renderer shade;
+    [SerializeField] private float fadeTime;
 
     private void Awake()
     {
@@ -46,12 +46,43 @@ public class GameManager : MonoBehaviour
 
     public void LoadSceneByName(string sceneName)
     {
+        StartCoroutine(FadeScene(sceneName));
+    }
+
+    private IEnumerator FadeScene(string sceneName)
+    {
+        Time.timeScale = 1;
+        Material material = shade.material;
+        //Fade scene out
+        float alpha = 0;
+        while (alpha < 1)
+        {
+            material.color = new Color(0, 0, 0, alpha);
+            alpha += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        alpha = 1;
+
+        //Scene loading logic
         if(currentSceneName != null) SceneManager.UnloadSceneAsync(currentSceneName);
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         currentSceneName = sceneName;
         playerRigController.SetPauseState(false);
-        Time.timeScale = 1;
         paused = false;
+
+        if (sceneName.Equals("Main Menu"))
+        {
+            playerRigController.ActivateRayInteractors();
+        }
+        
+        //Fade scene in
+        while (alpha > 0)
+        {
+            material.color = new Color(0, 0, 0, alpha);
+            alpha -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        alpha = 0;
     }
 
     public void MovePlayerRig(Vector3 location)

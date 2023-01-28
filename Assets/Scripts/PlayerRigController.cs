@@ -50,7 +50,6 @@ public class PlayerRigController : MonoBehaviour
     public void SetMenuState()
     {
         pauseMenu.SetActive(false);
-        
         ActivateRayInteractors();
     }
     
