@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class GuardAI : StateController
 {
     [Header("States")]
-    [SerializeField] private State patrolState;
-    [SerializeField] private State alertState;
+    private State patrolState;
+    private State alertState;
     
     [Header("Patrol Information")]
-    [SerializeField] public PatrolNode firstNode;
     [SerializeField] public bool loopPatrol; //Will the guard path to the first node upon reaching the last one or simply go back down the chain
-    
+
     [Header("Alert Phase Information")]
     [SerializeField] public float timeSeenToAlert;
     [SerializeField] public float alertFadeTime = 10;
@@ -28,14 +28,17 @@ public class GuardAI : StateController
     // Start is called before the first frame update
     void Start()
     {
-        navAgent = GetComponent<NavMeshAgent>();
-        LoadState(patrolState);
+        InitializeGuardAI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InitializeGuardAI()
     {
-        currentState.UpdateState();
+        navAgent = GetComponent<NavMeshAgent>();
+        patrolState = GetComponent<GS_Patrol>();
+        
+        alertState = GetComponent<GS_Alert>();
+        alertState.enabled = false;
+        LoadState(patrolState);
     }
 
     public void EnterAlertState()

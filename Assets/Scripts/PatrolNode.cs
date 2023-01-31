@@ -55,4 +55,36 @@ public class PatrolNode : MonoBehaviour
             previousNode.nextNode = this;
         }
     }
+    
+    /// <summary>
+    /// Configure the patrol node on instantiation in the PatrolNodeEditor script
+    /// </summary>
+    /// <param name="prevNode"></param>
+    public void ConfigureNode(PatrolNode prevNode)
+    {
+        //Node parameters of this node
+        previousNode = prevNode;
+        firstNode = prevNode.firstNode;
+        nextNode = prevNode.firstNode;
+        patrolNodePrefab = prevNode.patrolNodePrefab;
+        transform.SetParent(prevNode.parentObject.transform);    
+        
+        //Parent object, duh
+        parentObject = prevNode.parentObject;
+        
+        //Configure the node this was spawned from
+        prevNode.nextNode = this;
+    }
+
+    public void DeleteNode()
+    {
+        if (nextNode)
+        {
+            previousNode.nextNode = nextNode;
+        }
+        else
+        {
+            previousNode.nextNode = firstNode;
+        }
+    }
 }

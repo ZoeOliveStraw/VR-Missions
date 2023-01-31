@@ -4,57 +4,89 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(fileName = "PatrolState", menuName = "Guard States/Patrol", order = 1)]
 public class GS_Patrol : State
 {
-    private bool loopPatrol;
+    //private bool loopPatrol; //may use this in a future iteration where patrols may be looped
     private NavMeshAgent navAgent;
     private GuardAI myGuardAI;
     private GuardVision myGuardVision;
 
-    private PatrolNode nextNode;
+    private PatrolNode firstNode;
     private float minDistanceToTarget = 0.2f;
+    private List<Vector3> patrolPositions = new List<Vector3>();
+    private List<float> patrolWaits = new List<float>();
+    private int currentNodeIndex = 0;
 
     private float currentAlertness = 0; //This variable will build as the guard can see the player
     private float alertnessMeter; //Amount of time the guard needs to see the player to become alert
 
-    public override void OnStateEnter(GameObject myOwner)
+    [SerializeField] private Transform nodeParentObject;
+
+
+
+    /// <summary>
+    /// Called by StateController objects when this state is loaded, used for state initialization
+    /// </summary>
+    public override void OnStateEnter()
     {
         Debug.Log("Patrol state entered!");
         
         currentAlertness = 0;
-        
-        base.OnStateEnter(myOwner);
 
-        if(!myGuardAI) myGuardAI = owner.GetComponent<GuardAI>();
-        if(!myGuardVision) myGuardVision = owner.GetComponent<GuardVision>();
-        if(!navAgent) navAgent = owner.GetComponent<NavMeshAgent>();
+        if(!myGuardAI) myGuardAI = GetComponent<GuardAI>();
+        if(!myGuardVision) myGuardVision = GetComponent<GuardVision>();
+        if(!navAgent) navAgent = GetComponent<NavMeshAgent>();
         alertnessMeter = myGuardAI.timeSeenToAlert;
-        loopPatrol = myGuardAI.loopPatrol;
-            
+        //loopPatrol = myGuardAI.loopPatrol;
         navAgent.speed = myGuardAI.patrolMoveSpeed;
-
-        nextNode = myGuardAI.firstNode;
-        navAgent.SetDestination(nextNode.GetPosition());
+        
+        BuildPatrolRoute();
+        currentNodeIndex = 0;
+        navAgent.SetDestination(patrolPositions[currentNodeIndex]);
     }
 
-    public override void UpdateState()
+    private void Update()
     {
         SetNode();
         CheckForPlayer();
     }
-
+    
+    /// <summary>
+    /// Check if guard has reached its current destination and sets the next node if so
+    /// </summary>
     private void SetNode()
     {
-        
-        
-        if (Vector3.Distance(owner.transform.position, nextNode.GetPosition()) < minDistanceToTarget)
+        if (patrolPositions.Count != 0)
         {
-            nextNode = nextNode.GetNextNode();
-            myGuardAI.StartCoroutine(WaitBeforeNextNode());
+            if (Vector3.Distance(transform.position, patrolPositions[currentNodeIndex]) < minDistanceToTarget)
+            {
+                GetNextPatrolPosition();
+                myGuardAI.StartCoroutine(WaitBeforeNextNode());
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Caches the positions of all of the patrol nodes into the list patrolPositions
+    /// </summary>
+    private void BuildPatrolRoute()
+    {
+        if (patrolPositions.Count == 0)
+        {
+            foreach (Transform n in nodeParentObject)
+            {
+                patrolPositions.Add(n.position);
+                patrolWaits.Add(n.GetComponent<PatrolNode>().waitAtNode);
+            }
         }
     }
 
+    private void GetNextPatrolPosition()
+    {
+        if (currentNodeIndex < patrolPositions.Count - 1) currentNodeIndex++;
+        else currentNodeIndex = 0;
+    }
+    
     private void CheckForPlayer()
     {
         if (myGuardVision.canSeePlayer)
@@ -67,20 +99,24 @@ public class GS_Patrol : State
             currentAlertness -= Time.deltaTime;
             if (currentAlertness < 0) currentAlertness = 0;
         }
-
+        
         if (currentAlertness >= alertnessMeter)
         {
             LevelManager.instance.LevelWideAlert();
         }
-        
     }
 
     public IEnumerator WaitBeforeNextNode()
     {
-        yield return new WaitForSeconds(nextNode.waitAtNode);
-        navAgent.SetDestination(nextNode.GetPosition());
+        yield return new WaitForSeconds(patrolWaits[currentNodeIndex]);
+        SetNavDestination();
     }
-    
+
+    private void SetNavDestination()
+    {
+        navAgent.SetDestination(patrolPositions[currentNodeIndex]);
+    }
+
     public override void OnStateExit()
     {
         

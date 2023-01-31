@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Issue Tracker (Trello)
       objectReference: {fileID: 0}
+    - target: {fileID: 392557906632930000, guid: dae08daee5d3217488bc310b89904da9, type: 3}
+      propertyPath: m_Text
+      value: Title
+      objectReference: {fileID: 0}
     - target: {fileID: 392557907244979764, guid: dae08daee5d3217488bc310b89904da9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -350,6 +354,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4741463188204274917, guid: dae08daee5d3217488bc310b89904da9, type: 3}
+      propertyPath: m_KeyboardType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741463188204274917, guid: dae08daee5d3217488bc310b89904da9, type: 3}
+      propertyPath: m_TextComponent
+      value: 
+      objectReference: {fileID: 120843655}
     - target: {fileID: 7255569208294842215, guid: dae08daee5d3217488bc310b89904da9, type: 3}
       propertyPath: stopTimeOnOpen
       value: 0
@@ -368,7 +380,7 @@ PrefabInstance:
       objectReference: {fileID: 1842220273}
     - target: {fileID: 9082594195063123495, guid: dae08daee5d3217488bc310b89904da9, type: 3}
       propertyPath: m_HideMobileInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae08daee5d3217488bc310b89904da9, type: 3}
@@ -511,6 +523,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 31416307209558381, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
   m_PrefabInstance: {fileID: 1606458411}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &120843655 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 392557906978648737, guid: dae08daee5d3217488bc310b89904da9, type: 3}
+  m_PrefabInstance: {fileID: 9769612}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &434905662
 GameObject:
   m_ObjectHideFlags: 0

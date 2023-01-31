@@ -12,8 +12,10 @@ public abstract class StateController : MonoBehaviour
         if (currentState != null)
         {
             currentState.OnStateExit();
+            currentState.enabled = false;
         }
         currentState = state;
-        currentState.OnStateEnter(this.gameObject);
+        currentState.enabled = true;
+        currentState.OnStateEnter();
     }
 }
