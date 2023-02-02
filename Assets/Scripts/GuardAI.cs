@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -18,10 +19,13 @@ public class GuardAI : StateController
     [SerializeField] public float timeSeenToAlert;
     [SerializeField] public float alertFadeTime = 10;
 
-    [Header("Guard stats")] 
+    [Header("Guard stats")]
     [SerializeField] public float patrolMoveSpeed;
     [SerializeField] public float alertMoveSpeed;
     [SerializeField] public float investigationMoveSpeed;
+
+    [Header("Animation stuff")] 
+    [SerializeField] private Animator _animator;
 
     public NavMeshAgent navAgent;
     
@@ -29,6 +33,11 @@ public class GuardAI : StateController
     void Start()
     {
         InitializeGuardAI();
+    }
+
+    void FixedUpdate()
+    {
+        SetAnimation();
     }
 
     private void InitializeGuardAI()
@@ -67,5 +76,10 @@ public class GuardAI : StateController
     {
         LevelManager.AlertTriggered -= EnterAlertState;
         LevelManager.PatrolTriggered -= EnterPatrolState;
+    }
+
+    private void SetAnimation()
+    {
+        _animator.SetFloat("CurrentMoveSpeed", navAgent.velocity.magnitude);
     }
 }

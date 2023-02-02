@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
             Destroy(this);
         }
 
-        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        SetPlayerTransform();
         MovePlayerToSTart();
     }
     
@@ -68,12 +68,24 @@ public class LevelManager : MonoBehaviour
     {
         if (!playerTransform) //Keep checking for a reference to the player's tag until it is set
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            SetPlayerTransform();
         }
         else
         {
             //Setting the player position here to avoid having to get the reference in a bunch of places
             playerPosision = playerTransform.position;
+        }
+    }
+
+    private void SetPlayerTransform()
+    {
+        if (!GameManager.instance)
+        {
+            playerTransform = null;
+        }
+        else
+        {
+            playerTransform = GameManager.instance.GetPlayerTransform();
         }
     }
 

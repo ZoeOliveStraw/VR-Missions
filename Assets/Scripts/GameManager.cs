@@ -49,19 +49,41 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeScene(sceneName));
     }
 
+    /// <summary>
+    /// //Fade to black until the scene is loaded and then fade back in
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <returns></returns>
     private IEnumerator FadeScene(string sceneName)
     {
         Time.timeScale = 1;
         Material material = shade.material;
         //Fade scene out
         float alpha = 0;
-        while (alpha < 1)
+        
+        if (!sceneName.Equals("Main Menu"))
         {
-            material.color = new Color(0, 0, 0, alpha);
-            alpha += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+
+            while (alpha < 1)
+            {
+                material.color = new Color(0, 0, 0, alpha);
+                alpha += (Time.deltaTime / fadeTime);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
+        else
+        {
+            material.color = new Color(0, 0, 0, 1);
+            yield return new WaitForSeconds(fadeTime);
+        }
+        
+        
+        
+        
+        
         alpha = 1;
+        material.color = new Color(0, 0, 0, alpha);
+        
 
         //Scene loading logic
         if(currentSceneName != null) SceneManager.UnloadSceneAsync(currentSceneName);
@@ -75,11 +97,13 @@ public class GameManager : MonoBehaviour
             playerRigController.ActivateRayInteractors();
         }
         
+        while(!SceneManager.GetSceneByName(sceneName).isLoaded)
+        
         //Fade scene in
         while (alpha > 0)
         {
             material.color = new Color(0, 0, 0, alpha);
-            alpha -= Time.deltaTime;
+            alpha -= (Time.deltaTime / fadeTime);
             yield return new WaitForSeconds(Time.deltaTime);
         }
         alpha = 0;
@@ -103,5 +127,10 @@ public class GameManager : MonoBehaviour
     public GameObject GetPlayerRig()
     {
         return playerRig;
+    }
+    
+    public Transform GetPlayerTransform()
+    {
+        return playerRig.transform;
     }
 }
