@@ -1,16 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class GuardAI : StateController
 {
     [Header("States")]
     private State patrolState;
     private State alertState;
+    private State seesPlayerState;
     
     [Header("Patrol Information")]
     [SerializeField] public bool loopPatrol; //Will the guard path to the first node upon reaching the last one or simply go back down the chain
@@ -26,7 +22,7 @@ public class GuardAI : StateController
 
     [Header("Animation stuff")] 
     [SerializeField] private Animator animator;
-    [SerializeField] private NavMeshAgent navAgent;
+    private NavMeshAgent navAgent;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +44,7 @@ public class GuardAI : StateController
         navAgent = GetComponent<NavMeshAgent>();
         patrolState = GetComponent<GS_Patrol>();
         alertState = GetComponent<GS_Alert>();
+        seesPlayerState = GetComponent<GS_SeesPlayer>();
         
         alertState.enabled = false;
         LoadState(patrolState);
@@ -66,6 +63,11 @@ public class GuardAI : StateController
     {
         Debug.Log("Triggering patrol");
         LoadState(patrolState);
+    }
+
+    public void EnterSeesPlayerState()
+    {
+        LoadState(seesPlayerState);
     }
 
     private void OnEnable()

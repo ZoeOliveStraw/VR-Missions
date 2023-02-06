@@ -12,13 +12,10 @@ public class GS_Patrol : State
     private GuardVision myGuardVision;
 
     private PatrolNode firstNode;
-    private float minDistanceToTarget = 0.2f;
+    private float minDistanceToTarget = 0.5f;
     private List<Vector3> patrolPositions = new List<Vector3>();
     private List<float> patrolWaits = new List<float>();
     private int currentNodeIndex = 0;
-
-    private float currentAlertness = 0; //This variable will build as the guard can see the player
-    private float alertnessMeter; //Amount of time the guard needs to see the player to become alert
 
     [SerializeField] private Transform nodeParentObject;
 
@@ -29,20 +26,20 @@ public class GS_Patrol : State
     /// </summary>
     public override void OnStateEnter()
     {
-        Debug.Log("Patrol state entered!");
-        
-        currentAlertness = 0;
-
+        Initialize();
+        BuildPatrolRoute();
+        navAgent.SetDestination(patrolPositions[currentNodeIndex]);
+    }
+    
+    /// <summary>
+    /// Get references to components as necessary
+    /// </summary>
+    private void Initialize()
+    {
         if(!myGuardAI) myGuardAI = GetComponent<GuardAI>();
         if(!myGuardVision) myGuardVision = GetComponent<GuardVision>();
         if(!navAgent) navAgent = GetComponent<NavMeshAgent>();
-        alertnessMeter = myGuardAI.timeSeenToAlert;
-        //loopPatrol = myGuardAI.loopPatrol;
         navAgent.speed = myGuardAI.patrolMoveSpeed;
-        
-        BuildPatrolRoute();
-        currentNodeIndex = 0;
-        navAgent.SetDestination(patrolPositions[currentNodeIndex]);
     }
 
     private void Update()
@@ -68,6 +65,7 @@ public class GS_Patrol : State
     
     /// <summary>
     /// Caches the positions of all of the patrol nodes into the list patrolPositions
+    /// Only happens if there is not a node list yet
     /// </summary>
     private void BuildPatrolRoute()
     {
@@ -78,6 +76,8 @@ public class GS_Patrol : State
                 patrolPositions.Add(n.position);
                 patrolWaits.Add(n.GetComponent<PatrolNode>().waitAtNode);
             }
+
+            currentNodeIndex = 0;
         }
     }
 
@@ -91,34 +91,18 @@ public class GS_Patrol : State
     {
         if (myGuardVision.canSeePlayer)
         {
-            currentAlertness += Time.deltaTime * myGuardVision.GetAmountPlayerIsVisible();
-            if (currentAlertness > alertnessMeter) currentAlertness = alertnessMeter;
-        }
-        else
-        {
-            currentAlertness -= Time.deltaTime;
-            if (currentAlertness < 0) currentAlertness = 0;
-        }
-        
-        if (currentAlertness >= alertnessMeter)
-        {
-            LevelManager.instance.LevelWideAlert();
+            myGuardAI.EnterSeesPlayerState();
         }
     }
 
     public IEnumerator WaitBeforeNextNode()
     {
         yield return new WaitForSeconds(patrolWaits[currentNodeIndex]);
-        SetNavDestination();
-    }
-
-    private void SetNavDestination()
-    {
         navAgent.SetDestination(patrolPositions[currentNodeIndex]);
     }
 
     public override void OnStateExit()
     {
-        
+        StopAllCoroutines();
     }
 }

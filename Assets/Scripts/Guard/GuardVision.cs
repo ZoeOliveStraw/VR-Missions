@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -13,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class GuardVision : MonoBehaviour
 {
-    private Vector3 _playerPosition;
+    private Vector3 playerPosition;
     
     [SerializeField] private float maxPlayerDistaince = 5;
     [SerializeField] private float maxHorizontalAngle;
@@ -43,7 +41,7 @@ public class GuardVision : MonoBehaviour
 
         GetAmountPlayerIsVisible();
         SetCanSeePlayer();
-        Debug.DrawLine(transform.position, _playerPosition, canSeePlayer ?Color.red : Color.green, Time.fixedDeltaTime);
+        Debug.DrawLine(transform.position, playerPosition, canSeePlayer ?Color.red : Color.green, Time.fixedDeltaTime);
     }
     
     /// <summary>
@@ -51,35 +49,41 @@ public class GuardVision : MonoBehaviour
     /// </summary>
     private void SetCanSeePlayer()
     {
-        //Horizontal angle to player calculation
-        Vector3 playerHorizontalPosition = new Vector3(_playerPosition.x,0,_playerPosition.z);
-        Vector3 myHorizontalPosition = new Vector3(eyes.position.x, 0, eyes.position.z);
-        Vector3 angleToPlayer = playerHorizontalPosition - myHorizontalPosition;
-        //Vector3 angleToPlayer = transform.position - _playerPosition;
-        float horizontalAngle = Vector3.Angle(eyes.forward, angleToPlayer);
-        
-        //Vertical angle to player calculation
-        float horizontalDistanceToPlayer = angleToPlayer.magnitude;
-        float heightToPlayer = _playerPosition.y - eyes.position.y;
-        heightToPlayer = Math.Abs(heightToPlayer);
-        Vector2 heightAngle = new Vector2(horizontalDistanceToPlayer, heightToPlayer);
-        float verticalAngle = Vector2.Angle(heightAngle, Vector2.right);
-
-        //If the player is within our vision range we raycast to her and see if we can see her
-        if (verticalAngle < maxVerticalAngle
-            && horizontalAngle < maxHorizontalAngle
-            && currentDistanceToPlayer < maxPlayerDistaince)
+        if (currentDistanceToPlayer < maxPlayerDistaince)
         {
-            Vector3 trueAngleToPlayer = _playerPosition - eyes.position;
-            RaycastHit hit;
-            Ray playerDetectionRay = new Ray(eyes.position, trueAngleToPlayer);
-            Debug.DrawRay(eyes.position, trueAngleToPlayer);
+            //Horizontal angle to player calculation
+            Vector3 playerHorizontalPosition = new Vector3(playerPosition.x,0,playerPosition.z);
+            Vector3 myHorizontalPosition = new Vector3(eyes.position.x, 0, eyes.position.z);
+            Vector3 angleToPlayer = playerHorizontalPosition - myHorizontalPosition;
+            //Vector3 angleToPlayer = transform.position - _playerPosition;
+            float horizontalAngle = Vector3.Angle(eyes.forward, angleToPlayer);
+        
+            //Vertical angle to player calculation
+            float horizontalDistanceToPlayer = angleToPlayer.magnitude;
+            float heightToPlayer = playerPosition.y - eyes.position.y;
+            heightToPlayer = Math.Abs(heightToPlayer);
+            Vector2 heightAngle = new Vector2(horizontalDistanceToPlayer, heightToPlayer);
+            float verticalAngle = Vector2.Angle(heightAngle, Vector2.right);
 
-            if (Physics.Raycast(playerDetectionRay, out hit, currentDistanceToPlayer))
+            //If the player is within our vision range we raycast to her and see if we can see her
+            if (verticalAngle < maxVerticalAngle
+                && horizontalAngle < maxHorizontalAngle)
             {
-                if (hit.collider.gameObject.CompareTag("Player"))
+                Vector3 trueAngleToPlayer = playerPosition - eyes.position;
+                RaycastHit hit;
+                Ray playerDetectionRay = new Ray(eyes.position, trueAngleToPlayer);
+                Debug.DrawRay(eyes.position, trueAngleToPlayer);
+
+                if (Physics.Raycast(playerDetectionRay, out hit, currentDistanceToPlayer))
                 {
-                    canSeePlayer = true;
+                    if (hit.collider.gameObject.CompareTag("Player"))
+                    {
+                        canSeePlayer = true;
+                    }
+                    else
+                    {
+                        canSeePlayer = false;
+                    }
                 }
                 else
                 {
@@ -117,7 +121,7 @@ public class GuardVision : MonoBehaviour
 
     private void GetPlayerPositionAndDistance()
     {
-        _playerPosition = mgr.GetPlayerPosition();
-        currentDistanceToPlayer = Vector3.Distance(transform.position, _playerPosition);
+        playerPosition = mgr.GetPlayerPosition();
+        currentDistanceToPlayer = Vector3.Distance(transform.position, playerPosition);
     }
 }

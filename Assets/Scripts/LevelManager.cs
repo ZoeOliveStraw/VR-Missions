@@ -81,7 +81,7 @@ public class LevelManager : MonoBehaviour
     {
         if (!GameManager.instance)
         {
-            playerTransform = null;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }
         else
         {
