@@ -39,8 +39,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        
-        
         LoadSceneByName("Main Menu");
     }
 
@@ -68,7 +66,7 @@ public class GameManager : MonoBehaviour
             {
                 material.color = new Color(0, 0, 0, alpha);
                 alpha += (Time.deltaTime / fadeTime);
-                yield return new WaitForSeconds(Time.deltaTime);
+                yield return new WaitForSeconds(Time.deltaTime / fadeTime);
             }
         }
         else
@@ -77,16 +75,15 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(fadeTime);
         }
         
-        
-        
-        
-        
+        //Set the screen to black
         alpha = 1;
         material.color = new Color(0, 0, 0, alpha);
-        
 
         //Scene loading logic
-        if(currentSceneName != null) SceneManager.UnloadSceneAsync(currentSceneName);
+        if (currentSceneName != null)
+        {
+            SceneManager.UnloadSceneAsync(currentSceneName);
+        }
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         currentSceneName = sceneName;
         playerRigController.SetPauseState(false);
@@ -96,8 +93,11 @@ public class GameManager : MonoBehaviour
         {
             playerRigController.ActivateRayInteractors();
         }
-        
-        while(!SceneManager.GetSceneByName(sceneName).isLoaded)
+
+        while (!SceneManager.GetSceneByName(sceneName).isLoaded)
+        {
+            yield return new WaitForEndOfFrame();
+        }
         
         //Fade scene in
         while (alpha > 0)
