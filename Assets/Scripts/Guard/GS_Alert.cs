@@ -11,7 +11,7 @@ public class GS_Alert : State
     
     private Vector3 lastKnownPlayerPosition;
     private Vector3 currentTarget;
-    
+
     private float minDistanceToTarget = 0.2f;
 
     public override void OnStateEnter()
@@ -25,7 +25,7 @@ public class GS_Alert : State
         navAgent.speed = myGuardAI.alertMoveSpeed;
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
         if (myGuardVision.canSeePlayer)
         {

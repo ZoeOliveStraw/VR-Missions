@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class GuardVision : MonoBehaviour
 {
-    private Vector3 playerPosition;
+    public Vector3 playerPosition;
     
     [SerializeField] private float maxPlayerDistaince = 5;
     [SerializeField] private float maxHorizontalAngle;
@@ -76,7 +76,7 @@ public class GuardVision : MonoBehaviour
 
                 if (Physics.Raycast(playerDetectionRay, out hit, currentDistanceToPlayer))
                 {
-                    if (hit.collider.gameObject.CompareTag("Player"))
+                    if (hit.collider.gameObject.CompareTag("MainCamera"))
                     {
                         canSeePlayer = true;
                     }

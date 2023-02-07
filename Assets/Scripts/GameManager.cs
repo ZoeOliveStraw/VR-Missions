@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Renderer shade;
     [SerializeField] private float fadeTime;
 
+    [SerializeField] private Transform playerCameraTransform;
+
     private void Awake()
     {
         pauseAction.action.performed += ctx => TogglePause();

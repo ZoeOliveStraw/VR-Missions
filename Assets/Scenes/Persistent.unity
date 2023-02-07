@@ -301,6 +301,7 @@ MonoBehaviour:
   pauseAction: {fileID: 2746646200643894928, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   shade: {fileID: 1888728178}
   fadeTime: 2
+  playerCameraTransform: {fileID: 1224140835}
 --- !u!4 &816765594
 Transform:
   m_ObjectHideFlags: 0
@@ -316,6 +317,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1224140834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 31416307817296276, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+  m_PrefabInstance: {fileID: 1606458411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1224140835 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 31416307817296279, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+  m_PrefabInstance: {fileID: 1606458411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1224140840
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224140834}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1606458411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -327,9 +351,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.72
       objectReference: {fileID: 0}
+    - target: {fileID: 31416307209558370, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 31416307817296276, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 31416308745312224, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 31416308745312228, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
       propertyPath: m_Name
       value: Player Rig
+      objectReference: {fileID: 0}
+    - target: {fileID: 31416308745312228, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 31416308745312230, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
       propertyPath: m_RootOrder

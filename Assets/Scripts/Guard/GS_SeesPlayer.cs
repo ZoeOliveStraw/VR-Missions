@@ -7,15 +7,19 @@ public class GS_SeesPlayer : State
     private GuardVision guardVision;
     private GuardAI guardAI;
     private NavMeshAgent navAgent;
+    private Animator animator;
     private float alertMeter;
     private float alertMeterLength;
 
+    [SerializeField] private float rotationSpeed = 100;
     [SerializeField] private float waitBeforeReturningToPatrol;
 
     public override void OnStateEnter()
     {
+        Debug.Log("Suspicious entered");
         alertMeter = 0;
         Initialize();
+        animator.SetBool("Suspicious", true);
         navAgent.isStopped = true;
     }
 
@@ -30,7 +34,6 @@ public class GS_SeesPlayer : State
     /// </summary>
     private void FixedUpdate()
     {
-        Debug.Log(alertMeter);
         if (!guardVision.canSeePlayer)
         {
             StartCoroutine(Wait());
@@ -41,7 +44,7 @@ public class GS_SeesPlayer : State
             alertMeter += Time.fixedDeltaTime;
             if (alertMeter >= alertMeterLength)
             {
-                guardAI.EnterAlertState();
+                LevelManager.instance.LevelWideAlert();
             }
         }
     }
@@ -67,10 +70,17 @@ public class GS_SeesPlayer : State
         
         guardAI.EnterPatrolState();
     }
-
+    
+    /// <summary>
+    /// 
+    /// </summary>
     private void TurnTowardsPlayer()
     {
-        
+        Vector3 dir = guardVision.playerPosition - transform.position;
+        dir = new Vector3(dir.x, 0, dir.z);
+
+        Quaternion rot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * rotationSpeed);
     }
 
     //Set component references if they haven't been set already
@@ -79,6 +89,7 @@ public class GS_SeesPlayer : State
         if (!guardVision) guardVision = GetComponent<GuardVision>();
         if (!guardAI) guardAI = GetComponent<GuardAI>();
         if (!navAgent) navAgent = GetComponent<NavMeshAgent>();
+        if (!animator) animator = guardAI.animator;
         
         alertMeterLength = guardAI.timeSeenToAlert;
     }

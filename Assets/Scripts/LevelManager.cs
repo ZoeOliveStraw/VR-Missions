@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
 
             if (timeSincePlayerSeen >= alertLength)
             {
+                timeSincePlayerSeen = 0;
                 LevelWidePatrol();
             }
         }
@@ -85,7 +86,7 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            playerTransform = GameManager.instance.GetPlayerTransform();
+            playerTransform = Camera.main.transform;
         }
     }
 

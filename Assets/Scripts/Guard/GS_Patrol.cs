@@ -8,8 +8,9 @@ public class GS_Patrol : State
 {
     //private bool loopPatrol; //may use this in a future iteration where patrols may be looped
     private NavMeshAgent navAgent;
-    private GuardAI myGuardAI;
+    private GuardAI guardAI;
     private GuardVision myGuardVision;
+    private Animator animator;
 
     private PatrolNode firstNode;
     private float minDistanceToTarget = 0.5f;
@@ -26,8 +27,10 @@ public class GS_Patrol : State
     /// </summary>
     public override void OnStateEnter()
     {
+        Debug.Log("Patrol entered");
         Initialize();
         BuildPatrolRoute();
+        animator.SetBool("Suspicious", false);
         navAgent.SetDestination(patrolPositions[currentNodeIndex]);
     }
     
@@ -36,10 +39,11 @@ public class GS_Patrol : State
     /// </summary>
     private void Initialize()
     {
-        if(!myGuardAI) myGuardAI = GetComponent<GuardAI>();
+        if(!guardAI) guardAI = GetComponent<GuardAI>();
         if(!myGuardVision) myGuardVision = GetComponent<GuardVision>();
         if(!navAgent) navAgent = GetComponent<NavMeshAgent>();
-        navAgent.speed = myGuardAI.patrolMoveSpeed;
+        if (!animator) animator = guardAI.animator;
+        navAgent.speed = guardAI.patrolMoveSpeed;
     }
 
     private void Update()
@@ -58,7 +62,7 @@ public class GS_Patrol : State
             if (Vector3.Distance(transform.position, patrolPositions[currentNodeIndex]) < minDistanceToTarget)
             {
                 GetNextPatrolPosition();
-                myGuardAI.StartCoroutine(WaitBeforeNextNode());
+                guardAI.StartCoroutine(WaitBeforeNextNode());
             }
         }
     }
@@ -91,7 +95,7 @@ public class GS_Patrol : State
     {
         if (myGuardVision.canSeePlayer)
         {
-            myGuardAI.EnterSeesPlayerState();
+            guardAI.EnterSeesPlayerState();
         }
     }
 

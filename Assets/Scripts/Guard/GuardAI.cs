@@ -21,7 +21,7 @@ public class GuardAI : StateController
     [SerializeField] public float investigationMoveSpeed;
 
     [Header("Animation stuff")] 
-    [SerializeField] private Animator animator;
+    [SerializeField] public Animator animator;
     private NavMeshAgent navAgent;
 
     // Start is called before the first frame update
