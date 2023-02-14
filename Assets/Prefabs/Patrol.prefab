@@ -223,9 +223,9 @@ MonoBehaviour:
   loopPatrol: 0
   timeSeenToAlert: 1
   alertFadeTime: 10
-  patrolMoveSpeed: 2
-  alertMoveSpeed: 3.5
-  investigationMoveSpeed: 2.5
+  patrolMoveSpeed: 1.2
+  alertMoveSpeed: 2
+  investigationMoveSpeed: 1.5
   animator: {fileID: 7152810441704940346}
 --- !u!114 &1138004006053518141
 MonoBehaviour:
@@ -241,8 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosition: {x: 0, y: 0, z: 0}
   maxPlayerDistaince: 15
-  maxHorizontalAngle: 70
-  maxVerticalAngle: 30
+  maxHorizontalAngle: 45
+  maxVerticalAngle: 20
   eyes: {fileID: 5382233119865910291}
   canSeePlayer: 0
 --- !u!114 &724786636350134382
