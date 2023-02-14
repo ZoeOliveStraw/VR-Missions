@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 798784abaa7026d4c98964364d418e37, type: 3}
-  m_Name: SampleScene
+  m_Name: 02 - Alleys
   m_EditorClassIdentifier: 
-  sceneName: SampleScene
-  description: This is the sample scene
+  sceneName: 02 - Alleys
+  description: Get to the Synthcorp building through the alleyways - don't get caught!
