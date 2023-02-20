@@ -359,6 +359,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 31416307963845802, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 31416308745312224, guid: 2c8df4bf4e7c1d346bab9b939f9e6795, type: 3}
       propertyPath: m_Radius
       value: 0.2
