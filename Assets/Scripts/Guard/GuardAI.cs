@@ -7,6 +7,7 @@ public class GuardAI : StateController
     private State patrolState;
     private State alertState;
     private State seesPlayerState;
+    private State attackState;
     
     [Header("Patrol Information")]
     [SerializeField] public bool loopPatrol; //Will the guard path to the first node upon reaching the last one or simply go back down the chain
@@ -45,6 +46,7 @@ public class GuardAI : StateController
         patrolState = GetComponent<GS_Patrol>();
         alertState = GetComponent<GS_Alert>();
         seesPlayerState = GetComponent<GS_SeesPlayer>();
+        attackState = GetComponent<GS_Attack_Melee>();
         
         alertState.enabled = false;
         LoadState(patrolState);
@@ -54,20 +56,23 @@ public class GuardAI : StateController
     {
         if (currentState != alertState)
         {
-            Debug.Log("Triggering alert");
             LoadState(alertState);
         }
     }
 
     public void EnterPatrolState()
     {
-        Debug.Log("Triggering patrol");
         LoadState(patrolState);
     }
 
     public void EnterSeesPlayerState()
     {
         LoadState(seesPlayerState);
+    }
+
+    public void EnterAttackState()
+    {
+        LoadState(attackState);
     }
 
     private void OnEnable()

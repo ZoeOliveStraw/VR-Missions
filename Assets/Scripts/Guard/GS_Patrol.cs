@@ -27,7 +27,6 @@ public class GS_Patrol : State
     /// </summary>
     public override void OnStateEnter()
     {
-        Debug.Log("Patrol entered");
         Initialize();
         BuildPatrolRoute();
         animator.SetBool("Suspicious", false);
@@ -44,6 +43,7 @@ public class GS_Patrol : State
         if(!navAgent) navAgent = GetComponent<NavMeshAgent>();
         if (!animator) animator = guardAI.animator;
         navAgent.speed = guardAI.patrolMoveSpeed;
+        myGuardVision.SetVisionCone(45);
     }
 
     private void Update()

@@ -14,6 +14,8 @@ public class PlayerRigController : MonoBehaviour
     [SerializeField] private Transform pauseMenuHolder;
     [SerializeField] private float pauseMenuRotationSpeed;
 
+    [SerializeField] private GameObject locomotionSystem;
+
 
     
     
@@ -66,5 +68,10 @@ public class PlayerRigController : MonoBehaviour
         
         lhRayObject.SetActive(true);
         rhRayObject.SetActive(true);
+    }
+
+    public void DisableLocomotion()
+    {
+        
     }
 }

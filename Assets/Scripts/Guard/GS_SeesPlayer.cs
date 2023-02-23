@@ -16,7 +16,6 @@ public class GS_SeesPlayer : State
 
     public override void OnStateEnter()
     {
-        Debug.Log("Suspicious entered");
         alertMeter = 0;
         Initialize();
         animator.SetBool("Suspicious", true);

@@ -117,6 +117,17 @@ public class GuardVision : MonoBehaviour
             return 0;
         }
     }
+
+    public void SetVisionCone(float horizontal)
+    {
+        maxHorizontalAngle = horizontal;
+    }
+
+    public void SetVisionCone(float horizontal, float vertical)
+    {
+        maxHorizontalAngle = horizontal;
+        maxVerticalAngle = vertical;
+    }
     
 
     private void GetPlayerPositionAndDistance()
