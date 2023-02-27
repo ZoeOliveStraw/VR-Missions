@@ -13,9 +13,16 @@ public class LevelGoal : MonoBehaviour
 
     [SerializeField] private GameObject menu;
     [SerializeField] private TextMeshProUGUI levelTime;
+    [SerializeField] private string nextLevelName;
+
+    private void Start()
+    {
+        menu.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        menu.SetActive(true);
         CompleteLevel();
     }
 
@@ -29,5 +36,15 @@ public class LevelGoal : MonoBehaviour
     public void ReturnToMainMenu()
     {
         GameManager.instance.LoadSceneByName("Main Menu");
+    }
+
+    public void LoadNextLevel()
+    {
+        GameManager.instance.LoadSceneByName(nextLevelName);
+    }
+    
+    public void RestartLevel()
+    {
+        GameManager.instance.ReloadCurrentLevel();
     }
 }

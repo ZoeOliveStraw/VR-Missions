@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerRigController : MonoBehaviour
@@ -14,11 +15,10 @@ public class PlayerRigController : MonoBehaviour
     [SerializeField] private Transform pauseMenuHolder;
     [SerializeField] private float pauseMenuRotationSpeed;
 
-    [SerializeField] private GameObject locomotionSystem;
+    [SerializeField] private TextMeshProUGUI menuText;
 
+    public bool isGameOver = false; //Is the game over state triggered
 
-    
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +26,7 @@ public class PlayerRigController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         RotatePauseMenu();
     }
@@ -40,13 +40,19 @@ public class PlayerRigController : MonoBehaviour
 
     public void SetPauseState(bool paused)
     {
+
+        if (isGameOver && !paused) return;
+
         pauseMenu.SetActive(paused);
-        
+
+        menuText.text = isGameOver ? "GAME OVER" : "PAUSED";
+    
         lhGrabObject.SetActive(!paused);
         rhGrabObject.SetActive(!paused);
-        
+    
         lhRayObject.SetActive(paused);
         rhRayObject.SetActive(paused);
+        
     }
 
     public void SetMenuState()
@@ -60,6 +66,12 @@ public class PlayerRigController : MonoBehaviour
         GameManager.instance.LoadSceneByName("Main Menu");
         SetMenuState();
     }
+    
+    public void RestartLevel()
+    {
+        GameManager.instance.ReloadCurrentLevel();
+        SetMenuState();
+    }
 
     public void ActivateRayInteractors()
     {
@@ -68,10 +80,5 @@ public class PlayerRigController : MonoBehaviour
         
         lhRayObject.SetActive(true);
         rhRayObject.SetActive(true);
-    }
-
-    public void DisableLocomotion()
-    {
-        
     }
 }

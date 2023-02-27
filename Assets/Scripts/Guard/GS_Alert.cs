@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,6 +10,7 @@ public class GS_Alert : State
     private GuardVision myGuardVision;
     private GuardAI myGuardAI;
     private NavMeshAgent navAgent;
+    private AudioSource audioSource;
     
     private Vector3 lastKnownPlayerPosition;
     private Vector3 currentTarget;
@@ -18,15 +20,20 @@ public class GS_Alert : State
     [SerializeField] private float minDistanceToTarget = 1f;
     [SerializeField] private float attackDistance;
     [SerializeField] private float updateNavTargetDistance = 0.2f;
+    [SerializeField] private List<AudioClip> barks;
+    [SerializeField] private TextMeshProUGUI exclamation;
 
     public override void OnStateEnter()
     {
         if(!myGuardAI) myGuardAI = GetComponent<GuardAI>();
         if(!myGuardVision) myGuardVision = GetComponent<GuardVision>();
         if(!navAgent) navAgent = GetComponent<NavMeshAgent>();
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
 
         navAgent.speed = myGuardAI.alertMoveSpeed;
         StartAlert();
+        PlayRandomBark();
+        exclamation.gameObject.SetActive(true);
     }
     
     private void StartAlert()
@@ -42,7 +49,6 @@ public class GS_Alert : State
 
     private void ProcessGuardBehavior()
     {
-        Debug.Log("Fixed update called");
         actualPlayerPosition = LevelManager.instance.GetPlayerPosition();
         //Update last known player position in manager if guard can see player
         if (myGuardVision.canSeePlayer)
@@ -67,9 +73,15 @@ public class GS_Alert : State
             currentTarget = lastKnownPlayerPosition;
         }
     }
+    
+    private void PlayRandomBark()
+    {
+        audioSource.PlayOneShot(barks[Random.Range(0,barks.Count)]);
+    }
 
     public override void OnStateExit()
     {
         //haha exiting the state cool
+        exclamation.gameObject.SetActive(false);
     }
 }

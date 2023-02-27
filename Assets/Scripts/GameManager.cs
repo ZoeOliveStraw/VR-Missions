@@ -84,8 +84,11 @@ public class GameManager : MonoBehaviour
         //Scene loading logic
         if (currentSceneName != null)
         {
-            SceneManager.UnloadSceneAsync(currentSceneName);
+            AsyncOperation ao = SceneManager.UnloadSceneAsync(currentSceneName);
+            yield return ao;
         }
+
+        playerRigController.isGameOver = false;
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         currentSceneName = sceneName;
         playerRigController.SetPauseState(false);
@@ -134,5 +137,16 @@ public class GameManager : MonoBehaviour
     public Transform GetPlayerTransform()
     {
         return playerRig.transform;
+    }
+
+    public void GameOver()
+    {
+        playerRigController.isGameOver = true;
+        TogglePause();
+    }
+
+    public void ReloadCurrentLevel()
+    {
+        LoadSceneByName(currentSceneName);
     }
 }

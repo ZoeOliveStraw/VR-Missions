@@ -51,7 +51,7 @@ public class GS_Attack_Melee : State
         {
             if (col.transform.CompareTag("Player"))
             {
-                Debug.Log("player hit!");
+                GameManager.instance.GameOver();
             }
         }
     }

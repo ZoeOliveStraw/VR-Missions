@@ -15,6 +15,7 @@ public class GuardAI : StateController
     [Header("Alert Phase Information")]
     [SerializeField] public float timeSeenToAlert;
     [SerializeField] public float alertFadeTime = 10;
+    [SerializeField] public float playerDistanceForAlert = 25;
 
     [Header("Guard stats")]
     [SerializeField] public float patrolMoveSpeed;
@@ -54,7 +55,8 @@ public class GuardAI : StateController
     
     public void EnterAlertState()
     {
-        if (currentState != alertState)
+        float currentDistanceToPlayer = Vector3.Distance(LevelManager.instance.GetPlayerPosition(), transform.position);
+        if (currentState != alertState && currentDistanceToPlayer <= playerDistanceForAlert)
         {
             LoadState(alertState);
         }

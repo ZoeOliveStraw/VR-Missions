@@ -109,8 +109,7 @@ public class GuardVision : MonoBehaviour
     {
         if (canSeePlayer)
         {
-            float portionOfDistance = (maxPlayerDistaince - currentDistanceToPlayer) / maxPlayerDistaince;
-            return portionOfDistance;
+            return Mathf.Clamp(((maxPlayerDistaince - currentDistanceToPlayer) / maxPlayerDistaince) * Time.fixedDeltaTime,.017f, 1);
         }
         else
         {
