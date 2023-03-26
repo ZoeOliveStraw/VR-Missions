@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 0a089acc2b7778c4f92f4308806a3cae
   - enabled: 1
+    path: Assets/Scenes/Game Over.unity
+    guid: a3c2661bfff802348812d1ce36efba47
+  - enabled: 1
     path: Assets/Scenes/01 - Rooftops.unity
     guid: 09133991a211a5540ba115f877466c25
   - enabled: 1

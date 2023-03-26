@@ -34,8 +34,13 @@ public class PlayerRigController : MonoBehaviour
     //Rotate the pause menu around the Y axis so it can keep up with the player
     private void RotatePauseMenu()
     {
-        pauseMenuHolder.rotation = Quaternion.Slerp(transform.rotation, Camera.main.transform.rotation, Time.deltaTime * pauseMenuRotationSpeed);
-        //pauseMenuHolder.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+        var cam = Camera.main.transform;
+        Quaternion cameraRotation = cam.rotation;
+        Vector3 cameraRotationEuler = cameraRotation.eulerAngles;
+        cameraRotationEuler = new Vector3(0,cameraRotationEuler.y,0);
+        
+        pauseMenuHolder.rotation = Quaternion.Euler(cameraRotationEuler);
+        pauseMenuHolder.position = cam.position;
     }
 
     public void SetPauseState(bool paused)
@@ -80,5 +85,14 @@ public class PlayerRigController : MonoBehaviour
         
         lhRayObject.SetActive(true);
         rhRayObject.SetActive(true);
+    }
+    
+    public void DeactivateRayInteractors()
+    {
+        lhGrabObject.SetActive(true);
+        rhGrabObject.SetActive(true);
+        
+        lhRayObject.SetActive(false);
+        rhRayObject.SetActive(false);
     }
 }

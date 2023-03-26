@@ -22,8 +22,11 @@ public class LevelGoal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        menu.SetActive(true);
-        CompleteLevel();
+        if (other.tag == "Player")
+        {
+            menu.SetActive(true);
+            CompleteLevel();
+        }
     }
 
     private void CompleteLevel()
@@ -31,6 +34,14 @@ public class LevelGoal : MonoBehaviour
         Time.timeScale = 0;
         levelTime.text = "Time: ????";
         GameManager.instance.GetPlayerRig().GetComponent<PlayerRigController>().ActivateRayInteractors();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            GameManager.instance.GetPlayerRig().GetComponent<PlayerRigController>().DeactivateRayInteractors();
+        }
     }
 
     public void ReturnToMainMenu()

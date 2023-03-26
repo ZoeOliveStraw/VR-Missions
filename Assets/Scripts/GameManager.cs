@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private string currentSceneName;
+    private string previousSceneName;
     private bool paused = false;
     
     private PlayerRigController playerRigController;
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadSceneByName(string sceneName)
     {
+        previousSceneName = currentSceneName;
         StartCoroutine(FadeScene(sceneName));
     }
 
@@ -63,7 +65,7 @@ public class GameManager : MonoBehaviour
         
         if (!sceneName.Equals("Main Menu"))
         {
-
+            
             while (alpha < 1)
             {
                 material.color = new Color(0, 0, 0, alpha);
@@ -142,11 +144,17 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         playerRigController.isGameOver = true;
-        TogglePause();
+        LoadSceneByName("Game Over");
     }
 
     public void ReloadCurrentLevel()
     {
         LoadSceneByName(currentSceneName);
+    }
+
+    public void LoadPreviousLevel()
+    {
+        Debug.Log($"About to load {previousSceneName}");
+        LoadSceneByName(previousSceneName);
     }
 }
