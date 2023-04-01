@@ -14,31 +14,37 @@ public class LevelGoal : MonoBehaviour
     [SerializeField] private GameObject menu;
     [SerializeField] private TextMeshProUGUI levelTime;
     [SerializeField] private string nextLevelName;
+    private bool hasBeenCompleted = false;
 
     private void Start()
     {
+        Debug.Log("Deactivating canvas");
         menu.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
-            menu.SetActive(true);
             CompleteLevel();
         }
     }
 
     private void CompleteLevel()
     {
-        Time.timeScale = 0;
-        levelTime.text = "Time: ????";
-        GameManager.instance.GetPlayerRig().GetComponent<PlayerRigController>().ActivateRayInteractors();
+        if(!hasBeenCompleted)
+        {
+            menu.SetActive(true);
+            levelTime.text = "Time: ????";
+            GameManager.instance.GetPlayerRig().GetComponent<PlayerRigController>().ActivateRayInteractors();
+            hasBeenCompleted = true;
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             GameManager.instance.GetPlayerRig().GetComponent<PlayerRigController>().DeactivateRayInteractors();
         }

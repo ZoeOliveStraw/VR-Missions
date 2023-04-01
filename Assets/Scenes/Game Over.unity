@@ -800,6 +800,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameOverScene, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 2083822926192482851, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083822926192482851, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
+    - target: {fileID: 2083822926192482851, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2083822926192482851, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3877914688467021379, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
     - target: {fileID: 5048834258189948118, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -816,6 +832,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Over Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 5048834258741348177, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
+    - target: {fileID: 5048834258741348177, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3877914688467021379, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
     - target: {fileID: 5048834259348118574, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -880,6 +904,14 @@ PrefabInstance:
       propertyPath: m_text
       value: GAME OVER
       objectReference: {fileID: 0}
+    - target: {fileID: 6276245796746149275, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
+    - target: {fileID: 6276245796746149275, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3877914688467021379, guid: e6e20483fdfb418488db52456c2e5e52, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1c53eb93326b8a43974e0f535539250, type: 3}
 --- !u!4 &537018681 stripped
