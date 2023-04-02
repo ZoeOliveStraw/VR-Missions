@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/02 - Alleys.unity
     guid: d9b2a19fdda05c042a34b320996c3649
+  - enabled: 1
+    path: Assets/Scenes/03 - Offices.unity
+    guid: 1d9238d9ece2a8c4189a8953c8d44b35
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ea47f7082726e1d48bb815163abb0b72, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 0c7a4afe1d375784aa8d5f4acb81b238, type: 2}
